@@ -1,0 +1,23 @@
+version: '2'
+services:
+
+  couchbase:
+    image: couchbase:community-4.0.0
+    ports:
+      - "8091"
+
+  elasticsearch:
+    image: elasticsearch
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:5.5.2
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
