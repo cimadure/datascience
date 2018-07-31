@@ -40,7 +40,7 @@ plt.ylabel('height of falling (m)')
 plt.show()
 
 
-mod.setLinearizationOptions(stopTime=2.0,tolerance=1e-06)
+mod.setLinearizationOptions(stopTime=2.0, tolerance=1e-06)
 mod.linearize()
 print(mod.getLinearInputs())
 print(mod.getLinearOutputs())

@@ -66,6 +66,19 @@ __pycache__/
 *$py.class
 
 # C extensions
+*.o
+*.a
+*.c
+*.h
+
+# Modelica
+*.mat
+*.libs
+*.xml
+*.log
+*.makefile
+
+
 
 # Distribution / packaging
 .Python
@@ -108,7 +121,6 @@ coverage.xml
 .hypothesis/
 
 # Translations
-*.mo
 *.pot
 
 # Django stuff:
