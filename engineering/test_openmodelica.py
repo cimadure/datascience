@@ -18,4 +18,5 @@ class TestModelicaIntegration(unittest.TestCase):
         self.session.sendExpression("loadModel(Modelica)")
         self.session.sendExpression(r'loadFile("BouncingBall.mo")')
         self.session.sendExpression("instantiateModel(BouncingBall)")
-        #self.assertIn(('BouncingBall', 'Modelica'), self.session.sendExpression("getClassNames()"))
+        self.assertIn('BouncingBall', self.session.sendExpression("getClassNames()"))
+        self.assertIn('Modelica', self.session.sendExpression("getClassNames()"))
