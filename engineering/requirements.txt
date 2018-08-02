@@ -2,3 +2,6 @@ OMPython
 PyZMQ
 
 matplotlib
+
+bokeh
+flask
