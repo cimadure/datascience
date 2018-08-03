@@ -19,6 +19,11 @@ from bokeh.plotting import figure
 from bokeh.resources import INLINE
 from bokeh.util.string import encode_utf8
 
+
+from OMPython import ModelicaSystem
+import matplotlib.pyplot as plt
+
+
 app = flask.Flask(__name__)
 
 colors = {
@@ -27,6 +32,7 @@ colors = {
     'Green': '#00FF00',
     'Blue':  '#0000FF',
 }
+
 
 def getitem(obj, item, default):
     if item not in obj:
@@ -41,6 +47,12 @@ def polynomial():
 
     """
 
+    file = "/usr/share/doc/omc/testmodels/BouncingBall.mo"
+
+    package = "BouncingBall"
+    mod = ModelicaSystem(file, package)
+
+
     # Grab the inputs arguments from the URL
     args = flask.request.args
 
@@ -50,10 +62,17 @@ def polynomial():
     to = int(getitem(args, 'to', 10))
     name = getitem(args, 'name', 'Ron.')
 
+    mod.setSimulationOptions(stopTime=to, tolerance=1e-08)
+    mod.simulate()
+
+    time, height = mod.getSolutions("time", "h")
+
     # Create a polynomial line graph with those arguments
     x = list(range(_from, to + 1))
     fig = figure(title="Polynomial")
-    fig.line(x, [i ** 2 for i in x], color=colors[color], line_width=2)
+    #fig.line(x, [i ** 2 for i in x], color=colors[color], line_width=2)
+
+    fig.line(time, height, color=colors[color], line_width=2)
 
     resources = INLINE.render()
 
