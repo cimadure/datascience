@@ -1,7 +1,8 @@
 model BouncingBall
   parameter Real e=0.7 "coefficient of restitution";
   parameter Real g=9.81 "gravity acceleration";
-  Real h(start=1) "height of ball";
+  parameter Real height=1 "start height";
+  Real h(start=height) "height of ball";
   Real v "velocity of ball";
   Boolean flying(start=true) "true, if ball is flying";
   Boolean impact;
