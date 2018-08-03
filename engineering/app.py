@@ -47,46 +47,39 @@ def polynomial():
 
     """
 
-    file = "/usr/share/doc/omc/testmodels/BouncingBall.mo"
+    file = "BouncingBall.mo"
 
     package = "BouncingBall"
     mod = ModelicaSystem(file, package)
-
 
     # Grab the inputs arguments from the URL
     args = flask.request.args
 
     # Get all the form arguments in the url with defaults
     color = getitem(args, 'color', 'Black')
+    _height = int(getitem(args, '_height', 1))
     _from = int(getitem(args, '_from', 0))
-    to = int(getitem(args, 'to', 10))
+    to = int(getitem(args, 'to', 2))
     name = getitem(args, 'name', 'Ron.')
 
-    mod.setSimulationOptions(stopTime=to, tolerance=1e-08)
+    #mod.setInputs(height=_height)
+    mod.setParameters(height=_height, e=0.9)
+    mod.setSimulationOptions(startTime=_from, stopTime=to, tolerance=1e-08)
     mod.simulate()
 
     time, height = mod.getSolutions("time", "h")
 
     # Create a polynomial line graph with those arguments
-    x = list(range(_from, to + 1))
-    fig = figure(title="Polynomial")
-    #fig.line(x, [i ** 2 for i in x], color=colors[color], line_width=2)
+    fig = figure(title="Natural Fall")
 
     fig.line(time, height, color=colors[color], line_width=2)
-
+    fig.xaxis.axis_label = 'time (s)'
+    fig.yaxis.axis_label = 'height of falling (m)'
     resources = INLINE.render()
 
     script, div = components(fig)
-    html = flask.render_template(
-        'index.html',
-        plot_script=script,
-        plot_div=div,
-        resources=resources,
-        color=color,
-        _from=_from,
-        to=to,
-        name=name,
-    )
+    html = flask.render_template('index.html', plot_script=script, plot_div=div, resources=resources, color=color,
+                                 _from=_from, to=to, _height=_height, name=name)
     return encode_utf8(html)
 
 

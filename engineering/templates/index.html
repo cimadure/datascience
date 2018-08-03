@@ -23,15 +23,20 @@
             <option {{ "selected" if color|indent(4)|safe == "Black" }} value="Black">Black</option>
         </select>
         <br>
+
+        <br>
         From:
         <input type="text" name="_from" value="{{ _from }}">
         <br>
         To:
         <input type="text" name="to" value="{{ to }}">
         <br>
+        Height:
+        <input type="text" name="_height" value="{{ _height }}">
+        <br>
         <button type="submit">Submit</button>
     </form>
     {{ plot_div|indent(4)|safe }}
-    <p> Demonstrates some very simple embedding into a webpage</p>
+    <p> Demonstrates some very simple integration between C++ IEEE and Web</p>
   </body>
 </html>
