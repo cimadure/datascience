@@ -11,9 +11,9 @@
     {{ plot_script|indent(4)|safe }}
   </head>
   <body>
-  Hello, {{ name }}
+
     <!-- A simple form for changing the graph -->
-    <p> Select your settings: </p>
+    <p>  Hello, {{ name }} , select your settings: </p>
     <form name="color_button" method='GET'>
         Color:
         <select name="color">
@@ -27,7 +27,6 @@
         <br>
         From:
         <input type="text" name="_from" value="{{ _from }}">
-        <br>
         To:
         <input type="text" name="to" value="{{ to }}">
         <br>

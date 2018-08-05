@@ -23,8 +23,19 @@ from bokeh.util.string import encode_utf8
 from OMPython import ModelicaSystem
 import matplotlib.pyplot as plt
 
+from bokeh.layouts import row, widgetbox
+from bokeh.models.widgets import RangeSlider
+
+
+def update():
+    print(slider.value)
+    pass
+
 
 app = flask.Flask(__name__)
+
+slider = RangeSlider(title="Time (s)", start=0, end=10, value=(0, 10), step=0.5, format="0,0")
+slider.on_change('value', lambda attr, old, new: update())
 
 colors = {
     'Black': '#000000',
@@ -62,24 +73,28 @@ def polynomial():
     to = int(getitem(args, 'to', 2))
     name = getitem(args, 'name', 'Ron.')
 
-    #mod.setInputs(height=_height)
+
     mod.setParameters(height=_height, e=0.9)
-    mod.setSimulationOptions(startTime=_from, stopTime=to, tolerance=1e-08)
+    mod.setSimulationOptions(startTime=_from, stopTime=slider.value[1], tolerance=1e-08)
     mod.simulate()
 
     time, height = mod.getSolutions("time", "h")
 
-    # Create a polynomial line graph with those arguments
+    # Create a figure of the result
     fig = figure(title="Natural Fall")
-
     fig.line(time, height, color=colors[color], line_width=2)
     fig.xaxis.axis_label = 'time (s)'
     fig.yaxis.axis_label = 'height of falling (m)'
+
+    print('----------------', slider.value)
     resources = INLINE.render()
 
-    script, div = components(fig)
-    html = flask.render_template('index.html', plot_script=script, plot_div=div, resources=resources, color=color,
-                                 _from=_from, to=to, _height=_height, name=name)
+    controls = widgetbox(slider)
+    comp = row(fig, controls)
+
+    script, div = components(comp)
+    html = flask.render_template('app.html', plot_script=script, plot_div=div, resources=resources, color=color,
+                                 _from=_from, to=slider.value[1], _height=_height, name=name)
     return encode_utf8(html)
 
 
