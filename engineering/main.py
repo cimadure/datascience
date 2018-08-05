@@ -6,6 +6,9 @@ from bokeh.themes import Theme
 
 from bokeh.sampledata.sea_surface_temperature import sea_surface_temperature
 
+#from bokeh.layouts import row, widgetbox
+#from bokeh.models.widgets import RangeSlider
+
 
 def modify_doc(doc):
     df = sea_surface_temperature.copy()
@@ -23,11 +26,11 @@ def modify_doc(doc):
         source.data = ColumnDataSource(data=data).data
 
     slider = Slider(start=0, end=30, value=0, step=1, title="Smoothing by N Days")
+    #slider = RangeSlider(title="Time (s)", start=0, end=10, value=(0, 10), step=0.5, format="0,0")
     slider.on_change('value', callback)
 
     doc.add_root(column(slider, plot))
 
-    #doc.theme = Theme(filename="theme.yaml")
 
 # Setting num_procs here means we can't touch the IOLoop before now, we must
 # let Server handle that. If you need to explicitly handle IOLoops then you
