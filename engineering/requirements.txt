@@ -6,3 +6,9 @@ matplotlib
 bokeh
 flask
 flask_testing
+
+
+dash==0.22.0  # The core dash backend
+dash-renderer==0.13.0  # The dash front-end
+dash-html-components==0.11.0  # HTML components
+dash-core-components==0.26.0  # Supercharged components
