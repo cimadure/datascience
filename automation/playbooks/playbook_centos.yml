@@ -1,7 +1,0 @@
----
-# These tasks install softwares
-
-- name: Install git
-  yum: name={{ item }} state=present
-  with_items:
-   - git
