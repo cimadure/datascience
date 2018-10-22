@@ -7,3 +7,6 @@ pygments
 pyqt
 mayavi
 #-e https://github.com/enthought/mayavi.git@25799fc6a1a4e29077f15926640a26782cbc926f
+
+
+meetup-api
