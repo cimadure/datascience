@@ -7,11 +7,9 @@ model BouncingBall
   Boolean flying(start=true) "true, if ball is flying";
   Boolean impact;
   Real v_new;
-  Integer foo;
 
 equation
   impact = h <= 0.0;
-  foo = if impact then 1 else 2;
   der(v) = if flying then -g else 0;
   der(h) = v;
 
